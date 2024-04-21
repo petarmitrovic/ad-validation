@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ad-material-validation
+
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: ad-material-validation
+    topics: test_topic
+
+materials:
+  storage:
+    local:
+      path: /tmp/materials
+
+notifications:
+  kafka:
+    topic: validation_results

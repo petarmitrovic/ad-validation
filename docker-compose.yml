@@ -54,17 +54,16 @@ services:
     networks:
       - kafka_network
 
-#  ad-validation:
-#    build:
-#      context: .
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - kafka
-#    env_file:
-#      - local.env
-
+  ad-validation:
+    build:
+      context: .
+    restart: always
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - kafka
+    networks:
+      - kafka_network
 
 networks:
   kafka_network:
