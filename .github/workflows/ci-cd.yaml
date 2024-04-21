@@ -27,7 +27,7 @@ jobs:
       - name: Cache the jar
         uses: actions/cache/save@v4
         with:
-          path: application/build/libs
+          path: build/libs
           key: boot-jar-${{ runner.os }}-${{ github.run_id }}
 
   build-docker-image:
@@ -42,7 +42,7 @@ jobs:
         id: restore-cache
         uses: actions/cache/restore@v4
         with:
-          path: application/build/libs
+          path: build/libs
           key: boot-jar-${{ runner.os }}-${{ github.run_id }}
 
       - name: Log in to the Container registry
