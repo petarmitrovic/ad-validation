@@ -9,7 +9,6 @@ env:
 jobs:
   build-gradle-project:
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v4
@@ -34,6 +33,8 @@ jobs:
   build-docker-image:
     needs: build-gradle-project
     runs-on: ubuntu-latest
+
+    permissions: write-all
 
     steps:
       - name: Checkout repository
