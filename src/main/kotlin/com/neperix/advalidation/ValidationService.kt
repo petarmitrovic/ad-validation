@@ -1,13 +1,13 @@
 package com.neperix.advalidation
 
-import com.neperix.advalidation.materials.MaterialsStorage
-import com.neperix.advalidation.notification.NotificationChannel
+import com.neperix.advalidation.notification.NotificationService
 import com.neperix.advalidation.notification.ValidationResult
+import com.neperix.advalidation.storage.MaterialsStorage
 import java.util.UUID
 
 class ValidationService(
     private val storage: MaterialsStorage,
-    private val channel: NotificationChannel
+    private val channel: NotificationService
 ) {
     fun process(materialUuid: UUID) {
         val material = storage.fetchMaterial(materialUuid)

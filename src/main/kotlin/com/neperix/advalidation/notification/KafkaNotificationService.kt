@@ -3,10 +3,10 @@ package com.neperix.advalidation.notification
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.kafka.core.KafkaTemplate
 
-class KafkaChannel(
+class KafkaNotificationService(
     private val kafkaTemplate: KafkaTemplate<String, String>,
     private val topicName: String
-) : NotificationChannel {
+) : NotificationService {
 
     private val mapper = ObjectMapper()
 

@@ -1,5 +1,6 @@
 package com.neperix.advalidation.materials
 
+import com.neperix.advalidation.storage.LocalMaterialsStorage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

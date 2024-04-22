@@ -1,4 +1,4 @@
-package com.neperix.advalidation.materials
+package com.neperix.advalidation.storage
 
 import java.util.UUID
 

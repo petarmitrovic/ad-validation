@@ -1,6 +1,6 @@
 package com.neperix.advalidation.notification
 
-interface NotificationChannel {
+interface NotificationService {
 
     fun send(result: ValidationResult)
 }

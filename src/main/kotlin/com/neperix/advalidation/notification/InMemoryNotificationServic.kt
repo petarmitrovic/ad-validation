@@ -2,7 +2,7 @@ package com.neperix.advalidation.notification
 
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class InMemoryChannel : NotificationChannel {
+class InMemoryNotificationServic : NotificationService {
 
     private val queue = ConcurrentLinkedQueue<ValidationResult>()
 

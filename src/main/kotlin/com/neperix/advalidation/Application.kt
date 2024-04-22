@@ -1,9 +1,9 @@
 package com.neperix.advalidation
 
-import com.neperix.advalidation.materials.LocalMaterialsStorage
-import com.neperix.advalidation.materials.MaterialsStorage
-import com.neperix.advalidation.notification.KafkaChannel
-import com.neperix.advalidation.notification.NotificationChannel
+import com.neperix.advalidation.notification.KafkaNotificationService
+import com.neperix.advalidation.notification.NotificationService
+import com.neperix.advalidation.storage.LocalMaterialsStorage
+import com.neperix.advalidation.storage.MaterialsStorage
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -20,12 +20,12 @@ class AdMaterialValidationApplication {
     fun notificationChannel(
         template: KafkaTemplate<String, String>,
         @Value("\${notifications.kafka.topic}") topicName: String
-    ): NotificationChannel {
-        return KafkaChannel(template, topicName)
+    ): NotificationService {
+        return KafkaNotificationService(template, topicName)
     }
 
     @Bean
-    fun service(storage: MaterialsStorage, channel: NotificationChannel) = ValidationService(storage, channel)
+    fun service(storage: MaterialsStorage, channel: NotificationService) = ValidationService(storage, channel)
 
     @Bean
     fun adMaterialLisener(service: ValidationService): AdMaterialListener {
