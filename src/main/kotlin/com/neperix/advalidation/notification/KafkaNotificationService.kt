@@ -1,6 +1,7 @@
 package com.neperix.advalidation.notification
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.neperix.advalidation.ValidationResult
 import org.springframework.kafka.core.KafkaTemplate
 
 class KafkaNotificationService(

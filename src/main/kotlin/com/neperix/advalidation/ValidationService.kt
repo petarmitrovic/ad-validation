@@ -2,20 +2,22 @@ package com.neperix.advalidation
 
 import com.neperix.advalidation.metadata.MetadataService
 import com.neperix.advalidation.notification.NotificationService
-import com.neperix.advalidation.notification.ValidationResult
-import java.util.UUID
+import com.neperix.advalidation.rules.RulesService
 
 class ValidationService(
     private val metadataService: MetadataService,
+    private val rulesService: RulesService,
     private val notificationService: NotificationService
 ) {
-    fun process(materialUuid: UUID) {
-        val material = metadataService.fetchMaterialMetadata(materialUuid)
+    fun process(command: ProcessMaterialCommand) {
+        val materialMetadata = metadataService.fetchMaterialMetadata(command.materialUUID)
+        val rulesChecks = rulesService.getRules(command.productUUID)
+            .map { it.check(materialMetadata) }
 
-        val result = if (material.size > 100 * 1024)
-            ValidationResult(true)
-        else
-            ValidationResult(false, "Material should be larger than 100 kB")
+        val result = ValidationResult(
+            successes = rulesChecks.filter { it.success }.map { it.message },
+            failures = rulesChecks.filterNot { it.success }.map { it.message }
+        )
 
         notificationService.send(result)
     }
