@@ -8,11 +8,6 @@ spring:
       group-id: ad-material-validation
     topics: test_topic
 
-materials:
-  storage:
-    local:
-      path: /tmp/materials
-
 notifications:
   kafka:
     topic: validation_results

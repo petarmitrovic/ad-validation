@@ -1,9 +1,9 @@
 package com.neperix.advalidation
 
+import com.neperix.advalidation.metadata.LocalMetadataStorage
+import com.neperix.advalidation.metadata.MetadataService
 import com.neperix.advalidation.notification.KafkaNotificationService
 import com.neperix.advalidation.notification.NotificationService
-import com.neperix.advalidation.storage.LocalMaterialsStorage
-import com.neperix.advalidation.storage.MaterialsStorage
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -14,7 +14,7 @@ import org.springframework.kafka.core.KafkaTemplate
 class AdMaterialValidationApplication {
 
     @Bean
-    fun fileStorage(@Value("\${materials.storage.local.path}") dir: String): MaterialsStorage = LocalMaterialsStorage(dir)
+    fun localMetadataService(): MetadataService = LocalMetadataStorage()
 
     @Bean
     fun notificationChannel(
@@ -25,7 +25,7 @@ class AdMaterialValidationApplication {
     }
 
     @Bean
-    fun service(storage: MaterialsStorage, channel: NotificationService) = ValidationService(storage, channel)
+    fun service(storage: MetadataService, channel: NotificationService) = ValidationService(storage, channel)
 
     @Bean
     fun adMaterialLisener(service: ValidationService): AdMaterialListener {

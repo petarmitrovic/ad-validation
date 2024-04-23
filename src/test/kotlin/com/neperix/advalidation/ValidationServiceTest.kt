@@ -1,7 +1,7 @@
 package com.neperix.advalidation
 
+import com.neperix.advalidation.metadata.LocalMetadataStorage
 import com.neperix.advalidation.notification.InMemoryNotificationServic
-import com.neperix.advalidation.storage.LocalMaterialsStorage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
@@ -12,7 +12,7 @@ import java.util.UUID
 
 internal class ValidationServiceTest {
 
-    private val storage = LocalMaterialsStorage(this.javaClass.getResource("/materials")!!.path)
+    private val storage = LocalMetadataStorage()
 
     @Test
     fun `it should return success if material is valid`() {
