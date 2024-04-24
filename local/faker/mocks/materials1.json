@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/materials/2fd04780-40e0-417c-ad1b-b4beb72841ae"
+  },
+  "response": {
+    "body": {
+      "format": "jpeg",
+      "size": 47748,
+      "resolution": 72,
+      "width": 600,
+      "height": 429,
+      "duration": 0
+    }
+  }
+}

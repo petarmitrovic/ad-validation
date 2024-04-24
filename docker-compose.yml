@@ -12,7 +12,7 @@ services:
       - ".volumes/zookeeper-data:/var/lib/zookeeper/data:rw"
       - ".volumes/zookeeper-log:/var/lib/zookeeper/log:rw"
     networks:
-      - kafka_network
+      - ad_validation_network
 
   kafka:
     image: confluentinc/cp-kafka:6.1.0
@@ -38,7 +38,7 @@ services:
     volumes:
       - ".volumes/kafka/data:/var/lib/kafka/data:rw"
     networks:
-      - kafka_network
+      - ad_validation_network
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -48,23 +48,33 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       DYNAMIC_CONFIG_ENABLED: 'true'
     volumes:
-      - ".volumes/kafka-ui/config.yml:/config.yml"
+      - "./local/kafka-ui/config.yml:/config.yml"
     depends_on:
       - kafka
     networks:
-      - kafka_network
+      - ad_validation_network
+
+  faker:
+    image: dotronglong/faker:stable
+    volumes:
+      - ./local/faker/mocks:/app/mocks
+    ports:
+      - "3030:3030"
 
   ad-validation:
     build:
       context: .
     restart: always
     environment:
+      SPRING_PROFILES_ACTIVE: local
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8090:8090"
     depends_on:
       - kafka
     networks:
-      - kafka_network
+      - ad_validation_network
 
 networks:
-  kafka_network:
-    name: kafka_network
+  ad_validation_network:
+    name: ad_validation_network

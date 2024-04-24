@@ -7,6 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest
 class ApplicationTests {
 
     @Test
-    fun contextLoads() {
+    fun contextLoadsForDevProfile() {
     }
 }

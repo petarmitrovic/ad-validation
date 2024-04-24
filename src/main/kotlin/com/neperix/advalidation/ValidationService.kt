@@ -9,7 +9,8 @@ class ValidationService(
     private val rulesService: RulesService,
     private val notificationService: NotificationService
 ) {
-    fun process(command: ProcessMaterialCommand) {
+    fun process(command: ValidationCommand) {
+        // TODO the follwoing 2 could be done in parallel; use coroutines
         val materialMetadata = metadataService.fetchMaterialMetadata(command.materialUUID)
         val rulesChecks = rulesService.getRules(command.productUUID)
             .map { it.check(materialMetadata) }

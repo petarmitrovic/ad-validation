@@ -26,7 +26,7 @@ internal class ValidationServiceTest {
         val notificationService = mockk<NotificationService>()
         val service = ValidationService(metadataService, rulesService, notificationService)
 
-        val command = ProcessMaterialCommand(UUID.randomUUID(), UUID.randomUUID())
+        val command = ValidationCommand(UUID.randomUUID(), UUID.randomUUID())
 
         every { metadataService.fetchMaterialMetadata(command.materialUUID) } returns
             AdMaterialMetadata("jpeg", 120000, 120, 800, 600, 0)
@@ -55,7 +55,7 @@ internal class ValidationServiceTest {
         val notificationService = mockk<NotificationService>()
         val service = ValidationService(metadataService, rulesService, notificationService)
 
-        val command = ProcessMaterialCommand(UUID.randomUUID(), UUID.randomUUID())
+        val command = ValidationCommand(UUID.randomUUID(), UUID.randomUUID())
 
         every { metadataService.fetchMaterialMetadata(command.materialUUID) } returns
             AdMaterialMetadata("jpeg", 200000, 120, 800, 600, 0)

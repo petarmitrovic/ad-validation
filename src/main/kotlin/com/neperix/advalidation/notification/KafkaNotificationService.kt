@@ -1,18 +1,17 @@
 package com.neperix.advalidation.notification
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.neperix.advalidation.ValidationResult
 import org.springframework.kafka.core.KafkaTemplate
 
 class KafkaNotificationService(
     private val kafkaTemplate: KafkaTemplate<String, String>,
-    private val topicName: String
+    private val topicName: String,
+    private val mapper: ObjectMapper = ObjectMapper().registerKotlinModule()
 ) : NotificationService {
 
-    private val mapper = ObjectMapper()
-
     override fun send(result: ValidationResult) {
-        val message = mapper.writeValueAsString(result)
-        kafkaTemplate.send(topicName, message)
+        kafkaTemplate.send(topicName, mapper.writeValueAsString(result))
     }
 }

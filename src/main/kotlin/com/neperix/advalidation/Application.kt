@@ -1,5 +1,7 @@
 package com.neperix.advalidation
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.neperix.advalidation.metadata.LocalMetadataStorage
 import com.neperix.advalidation.metadata.MetadataService
 import com.neperix.advalidation.notification.KafkaNotificationService
@@ -15,16 +17,15 @@ import org.springframework.kafka.core.KafkaTemplate
 @SpringBootApplication
 class AdMaterialValidationApplication {
 
-    // TODO Should be available only under the development profile
     @Bean
-    fun metadataService(): MetadataService = LocalMetadataStorage()
+    fun devMetadataService(): MetadataService = LocalMetadataStorage()
 
     @Bean
     fun notificationService(
         template: KafkaTemplate<String, String>,
         @Value("\${notifications.kafka.topic}") topicName: String
     ): NotificationService {
-        return KafkaNotificationService(template, topicName)
+        return KafkaNotificationService(template, topicName, objectMapper())
     }
 
     // TODO Should be available only under the development profile
@@ -32,7 +33,7 @@ class AdMaterialValidationApplication {
     fun rulesService(): RulesService = DummyRulesService()
 
     @Bean
-    fun service(
+    fun validationService(
         metadataService: MetadataService,
         rulesService: RulesService,
         notificationService: NotificationService
@@ -44,8 +45,11 @@ class AdMaterialValidationApplication {
 
     @Bean
     fun adMaterialLisener(service: ValidationService): AdMaterialListener {
-        return AdMaterialListener(service)
+        return AdMaterialListener(service, objectMapper())
     }
+
+    @Bean
+    fun objectMapper(): ObjectMapper = ObjectMapper().registerKotlinModule()
 }
 
 fun main(args: Array<String>) {
